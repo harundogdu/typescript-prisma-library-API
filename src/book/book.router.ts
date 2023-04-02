@@ -4,84 +4,86 @@ import type { Request, Response } from "express";
 import * as BookService from "./book.service";
 import { CreateBook } from "./book.service";
 
-const bookRouter = expres.Router();
+const router = expres.Router();
 
-bookRouter.get("/", async (req: Request, res: Response) => {
-  try {
-    const books = await BookService.getBooks();
-    return res.status(200).json(books);
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
+router
+  .route("/")
+  .get(async (req: Request, res: Response) => {
+    try {
+      const books = await BookService.getBooks();
+      return res.status(200).json(books);
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  })
+  .post(async (req: Request, res: Response) => {
+    try {
+      const { authorId, pageSize, publishedDate, title } =
+        req.body as BookService.CreateBook;
 
-bookRouter.get("/:id", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const book = await BookService.getBook(id);
-    return res.status(200).json(book);
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
+      const createdBook = BookService.createBook({
+        authorId,
+        pageSize,
+        publishedDate,
+        title,
+      });
 
-bookRouter.post("/", async (req: Request, res: Response) => {
-  try {
-    const { authorId, pageSize, publishedDate, title } =
-      req.body as BookService.CreateBook;
+      return res.status(201).json(createdBook);
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  });
 
-    const createdBook = BookService.createBook({
-      authorId,
-      pageSize,
-      publishedDate,
-      title,
-    });
+router
+  .route(":id")
+  .get(async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const book = await BookService.getBook(id);
+      return res.status(200).json(book);
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  })
+  .put(async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const { authorId, pageSize, publishedDate, title } =
+        req.body as CreateBook;
+      const updatedBook = await BookService.updateBook(id, {
+        authorId,
+        pageSize,
+        publishedDate,
+        title,
+      });
+      return res.status(200).json(updatedBook);
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  })
+  .delete(async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const deleteBook = await BookService.deleteBook(id);
+      return res.status(200).json(deleteBook);
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  });
 
-    return res.status(201).json(createdBook);
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
-
-bookRouter.put("/:id", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { authorId, pageSize, publishedDate, title } = req.body as CreateBook;
-    const updatedBook = await BookService.updateBook(id, {
-      authorId,
-      pageSize,
-      publishedDate,
-      title,
-    });
-    return res.status(200).json(updatedBook);
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
-
-bookRouter.delete("/:id", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const deleteBook = await BookService.deleteBook(id);
-    return res.status(200).json(deleteBook);
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
-
-export { bookRouter };
+export { router };
