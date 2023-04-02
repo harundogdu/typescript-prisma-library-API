@@ -98,72 +98,17 @@ Prisma Client is an auto-generated and type-safe query builder for Node.js & Typ
 
 ## TODO
 
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Prisma schema file with Book and Author models
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Book endpoints CRUD operations
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Author endpoints CRUD operations
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Error handling
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Prisma seed database script
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Prisma fresh script
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk" checked>
-    <label for="uchk">
-        Swagger API documentation
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk">
-    <label for="uchk">
-        Pagination & Sorting
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk">
-    <label for="uchk">
-        JWT authentication
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk">
-    <label for="uchk">
-        Rate limiting
-    </label>
-</div>
-<div>
-  <input type="checkbox" name="uchk">
-    <label for="uchk">
-        Dockerize the API
-    </label>
-</div>
+- [x] Prisma schema file with Book and Author models
+- [x] Book endpoints CRUD operations
+- [x] Author endpoints CRUD operations
+- [x] Error handling
+- [x] Prisma seed database script
+- [x] Prisma fresh script
+- [x] Swagger API documentation
+- [ ] Pagination & Sorting
+- [ ] JWT authentication
+- [ ] Rate limiting
+- [ ] Dockerize the API
 
 ## Authors
 
