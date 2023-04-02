@@ -2,6 +2,8 @@ import expres from "express";
 import type { Request, Response } from "express";
 import { body, validationResult, param, query } from "express-validator";
 
+import { errorHandler } from "@/middlewares/error.handlers";
+
 import * as BookService from "@/book/book.service";
 import type { CreateBook } from "@/book/book.service";
 
@@ -14,10 +16,7 @@ router
       const books = await BookService.getBooks();
       return res.status(200).json(books);
     } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+      return errorHandler.handleError(error, req, res);
     }
   })
   .post(
@@ -30,10 +29,7 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { authorId, pageSize, publishedDate, title } =
@@ -48,10 +44,7 @@ router
 
         return res.status(201).json(createdBook);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   );
@@ -65,20 +58,14 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { id } = req.params;
         const book = await BookService.getBook(id);
         return res.status(200).json(book);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   )
@@ -93,10 +80,7 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { id } = req.params;
@@ -110,10 +94,7 @@ router
         });
         return res.status(200).json(updatedBook);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   )
@@ -124,19 +105,13 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
         const { id } = req.params;
         const deleteBook = await BookService.deleteBook(id);
         return res.status(200).json(deleteBook);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   );

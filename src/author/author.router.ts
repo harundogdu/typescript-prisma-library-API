@@ -2,6 +2,8 @@ import expres from "express";
 import type { Request, Response } from "express";
 import { body, validationResult, param } from "express-validator";
 
+import { errorHandler } from "@/middlewares/error.handlers";
+
 import * as AuthorService from "@/author/author.service";
 
 const router = expres.Router();
@@ -13,10 +15,7 @@ router
       const authors = await AuthorService.getAuthors();
       return res.status(200).json(authors);
     } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+      return errorHandler.handleError(error, req, res);
     }
   })
   .post(
@@ -27,10 +26,7 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { firstName, lastName } = req.body as Omit<
@@ -43,10 +39,7 @@ router
         });
         return res.status(201).json(newAuthor);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   );
@@ -60,20 +53,14 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { id } = req.params;
         const author = await AuthorService.getAuthor(id);
         return res.status(200).json(author);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   )
@@ -85,10 +72,7 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { id } = req.params;
@@ -102,10 +86,7 @@ router
         });
         return res.status(200).json(updatedAuthor);
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   )
@@ -116,10 +97,7 @@ router
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          return res.status(400).json({
-            success: false,
-            message: errors.array(),
-          });
+          return errorHandler.validationError(errors.array(), req, res);
         }
 
         const { id } = req.params;
@@ -129,10 +107,7 @@ router
           author: deletedAuthor,
         });
       } catch (error: any) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        return errorHandler.handleError(error, req, res);
       }
     }
   );

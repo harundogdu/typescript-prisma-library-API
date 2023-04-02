@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ValidationError } from "express-validator";
 
 class ErrorHandler {
   handleError(err: Error, req: Request, res: Response): Response {
@@ -7,6 +8,18 @@ class ErrorHandler {
       message: err.message,
     });
   }
+  validationError(
+    err: ValidationError[],
+    req: Request,
+    res: Response
+  ): Response {
+    return res.status(400).json({
+      success: false,
+      message: err,
+    });
+  }
 }
 
-export { ErrorHandler };
+const errorHandler = new ErrorHandler();
+
+export { errorHandler };
