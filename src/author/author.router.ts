@@ -1,7 +1,7 @@
 import expres from "express";
 import type { Request, Response } from "express";
 
-import * as AuthorService from "./author.service";
+import * as AuthorService from "@/author/author.service";
 
 const router = expres.Router();
 

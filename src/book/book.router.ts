@@ -1,8 +1,8 @@
 import expres from "express";
 import type { Request, Response } from "express";
 
-import * as BookService from "./book.service";
-import { CreateBook } from "./book.service";
+import * as BookService from "@/book/book.service";
+import type { CreateBook } from "@/book/book.service";
 
 const router = expres.Router();
 

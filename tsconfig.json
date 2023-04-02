@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@prisma/*": ["prisma/*"]
+    },
+    "target": "es5",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ESNext"
+  },
+  "include": ["src/**/*", "prisma/**/*"],
+  "exclude": ["node_modules"],
+  "typeAcquisition": {
+    "enable": true
+  },
+  "compileOnSave": true,
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "es2017",
+      "esModuleInterop": true
+    },
+    "require": ["tsconfig-paths/register"]
+  }
+}

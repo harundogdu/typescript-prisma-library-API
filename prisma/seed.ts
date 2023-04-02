@@ -1,4 +1,4 @@
-import { db } from "../src/utils/db.server";
+import { db } from "@/utils/db.server";
 
 type Author = {
   firstName: string;
