@@ -1,0 +1,516 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Typescript & Prisma & Express Library API - OpenAPI 3.0",
+    "description": "The Library API is a simple API that allows you to manage a library. You can add books, authors, and publishers to the library. You can also retrieve information about the books, authors, and publishers in the library. You can also update and delete books, authors, and publishers from the library.",
+    "contact": {
+      "email": "harundogdu06@gmail.com",
+      "name": "Harun Doğdu"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Harun Doğdu",
+    "url": "https://harundogdu.dev"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1923/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "author",
+      "description": "Everything about your Authors",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://localhost:1923/"
+      }
+    },
+    {
+      "name": "book",
+      "description": "Everything about your Books",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://localhost:1923/"
+      }
+    }
+  ],
+  "paths": {
+    "/book": {
+      "post": {
+        "tags": ["book"],
+        "summary": "Add a new book to the store",
+        "description": "Add a new book to the store",
+        "operationId": "addBook",
+        "requestBody": {
+          "description": "Create a new book in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": ["write:book", "read:book"]
+          }
+        ]
+      },
+      "get": {
+        "summary": "Get all book",
+        "tags": ["book"],
+        "description": "Returns all book from the system that the user has access to",
+        "operationId": "findbook",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/book/{bookId}": {
+      "get": {
+        "tags": ["book"],
+        "summary": "Find book by ID",
+        "description": "Returns a single book",
+        "operationId": "getbookById",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "petstore_auth": ["write:book", "read:book"]
+          }
+        ]
+      },
+      "put": {
+        "tags": ["book"],
+        "summary": "Update an existing book",
+        "description": "Update an existing book by Id",
+        "operationId": "updatebook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "ID of book to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update an existent book in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": ["write:book", "read:book"]
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["book"],
+        "summary": "Deletes a book",
+        "description": "delete a book",
+        "operationId": "deletebook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "Book id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid book value"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": ["write:book", "read:book"]
+          }
+        ]
+      }
+    },
+    "/author": {
+      "post": {
+        "tags": ["author"],
+        "summary": "Add a new author to the store",
+        "description": "",
+        "operationId": "addAuthor",
+        "requestBody": {
+          "description": "Author object that needs to be added to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Author"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Author"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": ["author"],
+        "summary": "Finds Authors",
+        "description": "Multiple status values can be provided with comma separated strings",
+        "operationId": "findAuthors",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "Author first name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Author last name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Author"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Author"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/author/{authorId}": {
+      "get": {
+        "tags": ["author"],
+        "summary": "Find author by ID",
+        "description": "Returns a single author",
+        "operationId": "getAuthorById",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "description": "ID of author to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Author not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["author"],
+        "summary": "Deletes a author",
+        "description": "",
+        "operationId": "deleteAuthor",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "description": "Author id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid author value"
+          }
+        }
+      },
+      "put": {
+        "tags": ["author"],
+        "summary": "Update an existing author",
+        "description": "",
+        "operationId": "updateAuthor",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "description": "Author id to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Author object that needs to be added to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Author"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Author"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid author value"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "publishedDate": {
+            "type": "string"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "authorId": {
+            "type": "string"
+          }
+        }
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Book": {
+        "description": "Book object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Book"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Book"
+            }
+          }
+        }
+      }
+    }
+  }
+}

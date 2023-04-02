@@ -1,4 +1,4 @@
-## Typescript & Prisma § Express Library API
+## Typescript & Prisma & Express Library API
 
 This is a simple API built with Typescript, Prisma, and Express. It is a library API that allows users to create, read, update, and delete books and authors. It also allows users to create, read, update, and delete book authors.
 

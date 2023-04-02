@@ -16,7 +16,8 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "ESNext"
+    "module": "ESNext",
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "prisma/**/*"],
   "exclude": ["node_modules"],
