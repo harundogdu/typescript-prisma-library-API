@@ -1,5 +1,6 @@
 import expres from "express";
 import type { Request, Response } from "express";
+import { body, validationResult, param } from "express-validator";
 
 import * as AuthorService from "@/author/author.service";
 
@@ -18,72 +19,122 @@ router
       });
     }
   })
-  .post(async (req: Request, res: Response) => {
-    try {
-      const { firstName, lastName } = req.body as Omit<
-        AuthorService.Author,
-        "id"
-      >;
-      const newAuthor = await AuthorService.createAuthor({
-        firstName,
-        lastName,
-      });
-      return res.status(201).json(newAuthor);
-    } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+  .post(
+    body("firstName").notEmpty().withMessage("First name is required"),
+    body("lastName").notEmpty().withMessage("Last name is required"),
+    async (req: Request, res: Response) => {
+      try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+          return res.status(400).json({
+            success: false,
+            message: errors.array(),
+          });
+        }
+
+        const { firstName, lastName } = req.body as Omit<
+          AuthorService.Author,
+          "id"
+        >;
+        const newAuthor = await AuthorService.createAuthor({
+          firstName,
+          lastName,
+        });
+        return res.status(201).json(newAuthor);
+      } catch (error: any) {
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
     }
-  });
+  );
 
 router
   .route("/:id")
-  .get(async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const author = await AuthorService.getAuthor(id);
-      return res.status(200).json(author);
-    } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+  .get(
+    param("id").notEmpty().withMessage("Id is required"),
+    async (req: Request, res: Response) => {
+      try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+          return res.status(400).json({
+            success: false,
+            message: errors.array(),
+          });
+        }
+
+        const { id } = req.params;
+        const author = await AuthorService.getAuthor(id);
+        return res.status(200).json(author);
+      } catch (error: any) {
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
     }
-  })
-  .put(async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const { firstName, lastName } = req.body as Omit<
-        AuthorService.Author,
-        "id"
-      >;
-      const updatedAuthor = await AuthorService.updateAuthor(id, {
-        firstName,
-        lastName,
-      });
-      return res.status(200).json(updatedAuthor);
-    } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+  )
+  .put(
+    body("firstName").notEmpty().withMessage("First name is required"),
+    body("lastName").notEmpty().withMessage("Last name is required"),
+    async (req: Request, res: Response) => {
+      try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+          return res.status(400).json({
+            success: false,
+            message: errors.array(),
+          });
+        }
+
+        const { id } = req.params;
+        const { firstName, lastName } = req.body as Omit<
+          AuthorService.Author,
+          "id"
+        >;
+        const updatedAuthor = await AuthorService.updateAuthor(id, {
+          firstName,
+          lastName,
+        });
+        return res.status(200).json(updatedAuthor);
+      } catch (error: any) {
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
     }
-  })
-  .delete(async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const deletedAuthor = await AuthorService.deleteAuthor(id);
-      return res.status(200).json({
-        message: "Author deleted successfully!",
-        author: deletedAuthor,
-      });
-    } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+  )
+  .delete(
+    param("id").notEmpty().withMessage("Id is required"),
+    async (req: Request, res: Response) => {
+      try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+          return res.status(400).json({
+            success: false,
+            message: errors.array(),
+          });
+        }
+
+        const { id } = req.params;
+        const deletedAuthor = await AuthorService.deleteAuthor(id);
+        return res.status(200).json({
+          message: "Author deleted successfully!",
+          author: deletedAuthor,
+        });
+      } catch (error: any) {
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
     }
-  });
+  );
 
 export { router };
