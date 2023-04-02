@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "nodemon src/main.ts",
-    "start": "node src/main.ts"
+    "start": "node src/main.ts",
+    "fresh": "node -r esbuild-register prisma/fresh.ts"
   },
   "keywords": [],
   "author": "Harun Doğdu",
