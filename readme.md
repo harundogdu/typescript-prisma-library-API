@@ -55,9 +55,9 @@ Prisma Client is an auto-generated and type-safe query builder for Node.js & Typ
 
 <h3>API Prefix</h3>
 
-| Prefix | Description |
-| ------ | ----------- |
-| /api   | API         |
+| Prefix  | Description |
+| ------- | ----------- |
+| /api/v1 | API         |
 
 <h3>Books</h3>
 
