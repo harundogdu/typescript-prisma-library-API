@@ -29,7 +29,7 @@ app.use(`${API_PREFIX}/authors`, authorRouter);
 app.use(`${API_PREFIX}/books`, bookRouter);
 app.use(`${API_PREFIX}/docs`, swagger.serve, swagger.setup(swaggerDocument));
 
-app.get(API_PREFIX, (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   if (
     req.headers["user-agent"] &&
     browserList.some((browser) =>
