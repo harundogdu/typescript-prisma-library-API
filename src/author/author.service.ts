@@ -7,13 +7,14 @@ export type Author = {
 };
 
 // GET All authors
-const getAuthors = (): Promise<Author[]> => {
+const getAuthors = (limit?: number): Promise<Author[]> => {
   return db.author.findMany({
     select: {
       id: true,
       firstName: true,
       lastName: true,
     },
+    take: limit ? limit : 100,
   });
 };
 

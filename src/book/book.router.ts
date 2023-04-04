@@ -13,7 +13,8 @@ router
   .route("/")
   .get(async (req: Request, res: Response) => {
     try {
-      const books = await BookService.getBooks();
+      const { limit } = req.query;
+      const books = await BookService.getBooks(Number(limit));
       return res.status(200).json(books);
     } catch (error: any) {
       return errorHandler.handleError(error, req, res);

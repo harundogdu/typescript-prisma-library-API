@@ -15,7 +15,7 @@ export type CreateBook = {
 };
 
 // GET all books
-const getBooks = (): Promise<Book[]> => {
+const getBooks = (limit: number): Promise<Book[]> => {
   return db.book.findMany({
     select: {
       id: true,
@@ -23,6 +23,7 @@ const getBooks = (): Promise<Book[]> => {
       pageSize: true,
       publishedDate: true,
     },
+    take: limit ? limit : 100,
   });
 };
 
