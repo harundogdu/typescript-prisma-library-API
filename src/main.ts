@@ -4,9 +4,12 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import swagger from "swagger-ui-express";
 
-import { router as authorRouter } from "@/author/author.router";
-import { router as bookRouter } from "@/book/book.router";
-import { errorHandler } from "@/middlewares/error.handlers";
+import { errorHandler } from "@/middlewares";
+
+import { authorRouter } from "@/author";
+import { bookRouter } from "@/book";
+
+import { swaggerDocument, browserList } from "@/lib";
 
 // Config
 dotenv.config();
@@ -17,8 +20,6 @@ if (!process.env.PORT) {
 
 const PORT: number = parseInt(process.env.PORT, 10);
 const API_PREFIX: string = process.env.API_PREFIX || "/api/v1";
-import swaggerDocument from "@/lib/swagger.json";
-import browserList from "@/lib/browsers.json";
 
 const app = express();
 

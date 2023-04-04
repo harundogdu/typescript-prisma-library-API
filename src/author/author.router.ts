@@ -1,4 +1,4 @@
-import expres from "express";
+import express from "express";
 import type { Request, Response } from "express";
 import { body, validationResult, param } from "express-validator";
 
@@ -6,7 +6,7 @@ import { errorHandler } from "@/middlewares/error.handlers";
 
 import * as AuthorService from "@/author/author.service";
 
-const router = expres.Router();
+const router = express.Router();
 
 router
   .route("/")
@@ -112,4 +112,4 @@ router
     }
   );
 
-export { router };
+export default router;

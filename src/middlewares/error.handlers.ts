@@ -23,3 +23,4 @@ class ErrorHandler {
 const errorHandler = new ErrorHandler();
 
 export { errorHandler };
+export default errorHandler;
